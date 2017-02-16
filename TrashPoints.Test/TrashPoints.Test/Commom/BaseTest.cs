@@ -22,18 +22,18 @@ namespace TrashPoints.Test.Commom
             //Driver.Manage().Window.Maximize();
         }
 
-        //[TearDown]
-        //public void TearDownTest()
-        //{
-        //    try
-        //    {
-        //        Driver.Quit();
-        //        Driver = null;
-        //        Driver.Close();
-        //    }
-        //    catch (Exception)
-        //    { }
-        //}
+        [TearDown]
+        public void TearDownTest()
+        {
+            try
+            {
+                Driver.Quit();
+                Driver = null;
+                Driver.Close();
+            }
+            catch (Exception)
+            { }
+        }
 
 
     }

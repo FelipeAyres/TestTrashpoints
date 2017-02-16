@@ -36,7 +36,7 @@ namespace TrashPoints.Test.TestCases
             companyName.SendKeys("Empresa de coleta");
             tradingName.SendKeys("Empresa de coleta LTDA");
             identificationNumber.Click();
-            identificationNumber.SendKeys("25554892000102");
+            identificationNumber.SendKeys(Login.GerarCNPJ());
             segment.SendKeys("Coleta seletiva");
             recyclingCompanyLabel.Click();
             phone.Click();
@@ -58,5 +58,46 @@ namespace TrashPoints.Test.TestCases
             Assert.AreEqual("http://localhost:8080/Trashpoints/userManager/login", Driver.Url);
         }
 
+        [Test]
+        public void EditarEmpresaColeta()
+        {
+            Login.LogarComoEmpresaColeta(Driver);
+
+            Driver.Navigate().GoToUrl("http://localhost:8080/Trashpoints/Company/editCompany");
+
+            #region Get WebElements
+            IWebElement companyName = Driver.FindElement(By.Id("companyName"));
+            IWebElement tradingName = Driver.FindElement(By.Id("tradingName"));
+            IWebElement identificationNumber = Driver.FindElement(By.Id("identificationNumber"));
+            IWebElement segment = Driver.FindElement(By.Id("segment"));
+            //IWebElement recyclingCompanyLabel = Driver.FindElement(By.CssSelector("label[for=recyclingCompany]"));
+
+            IWebElement phone = Driver.FindElement(By.Id("phone"));
+            IWebElement site = Driver.FindElement(By.Id("site"));
+
+            //IWebElement userName = Driver.FindElement(By.Name("j_username"));
+            //IWebElement password = Driver.FindElement(By.Name("j_password"));
+
+            //IWebElement zipCode = Driver.FindElement(By.Id("zipCode"));
+            //IWebElement number = Driver.FindElement(By.Id("number"));
+            IWebElement submit = Driver.FindElement(By.CssSelector("button[type=submit]"));
+            #endregion
+
+            tradingName.Clear();
+            tradingName.SendKeys("Empresa de coleta LTDA");
+            segment.SendKeys("Coleta seletiva");
+            phone.Click();
+            phone.Clear();
+            phone.SendKeys("1231335678");
+            site.Clear();
+            site.SendKeys("http://www.coleta.com.br");
+
+            submit.Submit();
+
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.ClassName("iziToast")));
+            IWebElement divSucesso = Driver.FindElement(By.ClassName("iziToast-color-green"));
+            Assert.NotNull(divSucesso);
+        }
     }
 }

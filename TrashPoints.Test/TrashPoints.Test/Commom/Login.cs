@@ -47,5 +47,18 @@ namespace TrashPoints.Test.Commom
             return email = user + host;
         }
 
+        public static string GerarCNPJ()
+        {
+            Random random = new Random();
+            string cnpj = string.Empty;
+
+            for (int i = 0; i < 14; i++)
+            {
+                cnpj += random.Next(1, 10).ToString();
+
+            }
+            return cnpj;
+        }
+
     }
 }

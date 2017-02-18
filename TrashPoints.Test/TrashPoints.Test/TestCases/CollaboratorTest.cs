@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using TrashPoints.Test.Commom;
 
 namespace TrashPoints.Test.TestCases
@@ -39,7 +40,8 @@ namespace TrashPoints.Test.TestCases
 
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("col-map")));
-            submit.Click();
+            submit.Submit();
+            Thread.Sleep(TimeSpan.FromSeconds(8));
 
             wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(6));
             wait.Until(ExpectedConditions.UrlContains("http://localhost:8080/Trashpoints/userManager/login"));
